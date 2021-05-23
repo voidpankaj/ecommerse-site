@@ -1,0 +1,2 @@
+class StoreOwner < ApplicationRecord
+end
