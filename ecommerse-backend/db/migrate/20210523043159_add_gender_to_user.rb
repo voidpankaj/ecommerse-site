@@ -3,3 +3,4 @@ class AddGenderToUser < ActiveRecord::Migration[6.0]
     add_column :users, :gender, :string
   end
 end
+

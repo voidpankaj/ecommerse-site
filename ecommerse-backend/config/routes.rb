@@ -1,3 +1,15 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+	namespace :ecommerse do
+		namespace :api do
+			resources :purchases, only: [] do
+				# collection do
+				# 	get :account
+				# end
+				collection do
+					post :add_to_cart
+				end
+			end
+			resources :catalogs, only: [:index]
+		end
+	end
 end

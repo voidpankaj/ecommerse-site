@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_23_050605) do
+ActiveRecord::Schema.define(version: 2021_05_23_174858) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "state"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_05_23_050605) do
 
   create_table "catalogs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
-    t.string "price"
+    t.float "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "store_owner_id", null: false
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(version: 2021_05_23_050605) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "purchase_id", null: false
+    t.bigint "catalog_id", null: false
+    t.index ["catalog_id"], name: "index_order_items_on_catalog_id"
     t.index ["purchase_id"], name: "index_order_items_on_purchase_id"
   end
 
@@ -79,6 +81,7 @@ ActiveRecord::Schema.define(version: 2021_05_23_050605) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "customer_id", null: false
     t.index ["customer_id"], name: "index_purchases_on_customer_id"
+    t.index ["number"], name: "index_purchases_on_number", unique: true
   end
 
   create_table "store_owners", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -105,6 +108,7 @@ ActiveRecord::Schema.define(version: 2021_05_23_050605) do
   add_foreign_key "licence_items", "lite_licences"
   add_foreign_key "lite_licences", "customers"
   add_foreign_key "lite_licences", "store_owners"
+  add_foreign_key "order_items", "catalogs"
   add_foreign_key "order_items", "purchases"
   add_foreign_key "purchases", "customers"
   add_foreign_key "store_owners", "users"
