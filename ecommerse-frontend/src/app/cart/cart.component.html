@@ -1,6 +1,12 @@
 <h5>Cart</h5>
 
-<div class="cart-item" *ngFor="let item of items">
+<div class="cart-item" *ngFor="let item of cartService.cartData.items">
   <span>{{ item.title }}</span>
-  <span>{{ item.price | currency }}</span>
+  <!-- <span>{{item.quantity}}</span> -->
+  <span>{{ item.price | currency:'INR' }}</span>
+  <span>{{ item.price*item.quantity | currency:'INR'}}</span>
+  <!-- <input [(ngModel)]="item.quantity" name="someid"/> -->
+</div>
+<div class="total-price">
+	Total price {{total}}
 </div>
