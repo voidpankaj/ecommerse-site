@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_23_174858) do
+ActiveRecord::Schema.define(version: 2021_05_29_100342) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "state"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 2021_05_23_174858) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "store_owner_id", null: false
     t.index ["store_owner_id"], name: "index_catalogs_on_store_owner_id"
+  end
+
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "send_user_id"
+    t.integer "receiver_user_id"
+    t.bigint "quotation_request_id"
+    t.index ["quotation_request_id"], name: "index_comments_on_quotation_request_id"
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -84,6 +94,28 @@ ActiveRecord::Schema.define(version: 2021_05_23_174858) do
     t.index ["number"], name: "index_purchases_on_number", unique: true
   end
 
+  create_table "quotation_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "customer_id", null: false
+    t.bigint "store_owner_id", null: false
+    t.index ["customer_id"], name: "index_quotation_requests_on_customer_id"
+    t.index ["store_owner_id"], name: "index_quotation_requests_on_store_owner_id"
+  end
+
+  create_table "quote_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "quantity"
+    t.float "price"
+    t.float "quote_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "quotation_request_id", null: false
+    t.bigint "order_item_id", null: false
+    t.index ["order_item_id"], name: "index_quote_items_on_order_item_id"
+    t.index ["quotation_request_id"], name: "index_quote_items_on_quotation_request_id"
+  end
+
   create_table "store_owners", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -102,7 +134,18 @@ ActiveRecord::Schema.define(version: 2021_05_23_174858) do
     t.index ["login_id"], name: "index_users_on_login_id", unique: true
   end
 
+  create_table "workflows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "status"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "workable_type", null: false
+    t.bigint "workable_id", null: false
+    t.index ["workable_type", "workable_id"], name: "index_workflows_on_workable_type_and_workable_id"
+  end
+
   add_foreign_key "catalogs", "store_owners"
+  add_foreign_key "comments", "quotation_requests"
   add_foreign_key "customers", "users"
   add_foreign_key "licence_items", "catalogs"
   add_foreign_key "licence_items", "lite_licences"
@@ -111,5 +154,7 @@ ActiveRecord::Schema.define(version: 2021_05_23_174858) do
   add_foreign_key "order_items", "catalogs"
   add_foreign_key "order_items", "purchases"
   add_foreign_key "purchases", "customers"
+  add_foreign_key "quote_items", "order_items"
+  add_foreign_key "quote_items", "quotation_requests"
   add_foreign_key "store_owners", "users"
 end
