@@ -1,0 +1,42 @@
+<div class="row" *ngIf="quote && quote.items">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Product Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Qoute Price</th>
+        <th scope="col">Quantity</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of quote.items">
+      <tr>
+        <td>{{item.title}}</td>
+        <td>{{item.price}}</td>
+        <td *ngIf="!quote.can_edit">{{item.quote_price}}</td>
+        <td *ngIf="quote.can_edit">
+          <input type="number" name="" [(ngModel)]="item.quote_price">
+        </td>
+        <td *ngIf="!quote.can_edit_quantity">{{item.quantity}}</td>
+        <td *ngIf="quote.can_edit && quote.can_edit_quantity">
+          <input type="number" name="" [(ngModel)]="item.quantity">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <button *ngIf="quote.can_edit" (click)="updateQuote()">Submit Changes</button>
+  </div>
+  <div class="comments container" style="padding: 5px">
+    <div class="row add-comment">
+      <label style="margin: 5px">Comment</label>
+      <!-- <input  type="text" name="" [(ngModel)]="quote.comment"> -->
+      <textarea style="margin: 5px" class="form-control" rows="3" cols="20" id="comment" [(ngModel)]="quote.comment"></textarea>
+      <button (click)="addComment()">Send</button>
+    </div>
+    <div *ngFor="let comment of quote.comments">
+      <div class="alert alert-primary" role="alert">
+        {{comment.text}}
+      </div>
+    </div>
+  </div>
+</div>
