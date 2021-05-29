@@ -1,29 +1,34 @@
 <h2>My Quote Cart</h2>
 
+<div *ngIf="quotecartService.cartData && quotecartService.cartData.items">
+	<div class="cart-item" style="padding: 10px" *ngFor="let item of quotecartService.cartData.items">
+		<span>{{ item.title }}</span>
+		<div>{{item.quantity}}</div>
+		<div>{{ item.price | currency:'INR' }}</div>
+		<div>
+			<input type="text" [(ngModel)]="item.quote_price" name="qoute_price">
+		</div>
+		<div>
+			<input type="number" min="0" max ="100" [(ngModel)]="item.new_quantity" name="quantity" />
+		</div>
+		<button (click)="update(item)">update</button>
+		<div>{{ item.quote_price*item.quantity | currency:'INR'}}</div>
+	</div>
+	<div class="footer" *ngIf="quotecartService.cartData.items && quotecartService.cartData.items.length > 0">
+		<div>
+			Total price {{total}}
+		</div>
+		<div class="row" style="padding: 5px">
+			<div for="comment">Comment:</div>
+			<textarea class="form-control" rows="6" cols="40" id="comment" [(ngModel)]="comment"></textarea>
+		</div>
+		<div style="padding: 5px">
+			<button (click)="submitQuoteCart()">Submit Quote Cart</button>
+		</div>
+	</div>
+</div>
+<div *ngIf="!quotecartService.cartData">
+	<h3>You have no items in your quote cart.</h3>
+</div>
 
-<div class="cart-item" style="padding: 10px" *ngFor="let item of quotecartService.cartData.items">
-	<span>{{ item.title }}</span>
-	<div>{{item.quantity}}</div>
-	<div>{{ item.price | currency:'INR' }}</div>
-	<div>
-		<input type="text" [(ngModel)]="item.quote_price" name="qoute_price">
-	</div>
-	<div>
-		<input type="number" min="0" max ="100" [(ngModel)]="item.new_quantity" name="quantity" />
-	</div>
-	<button (click)="update(item)">update</button>
-	<div>{{ item.quote_price*item.quantity | currency:'INR'}}</div>
-</div>
-<div class="footer" *ngIf="quotecartService.cartData.items && quotecartService.cartData.items.length > 0">
-	<div>
-		Total price {{total}}
-	</div>
-	<div class="row" style="padding: 5px">
-		<div for="comment">Comment:</div>
-		<textarea class="form-control" rows="6" cols="40" id="comment" [(ngModel)]="comment"></textarea>
-	</div>
-	<div style="padding: 5px">
-		<button (click)="submitQuoteCart()">Submit Quote Cart</button>
-	</div>
-</div>
 

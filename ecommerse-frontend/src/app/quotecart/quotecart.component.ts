@@ -19,7 +19,9 @@ export class QuotecartComponent implements OnInit {
   	this.customerId = Number(this.route.snapshot.paramMap.get('cId'));
   	this.quotecartService.getQouteCartData(this.customerId).subscribe(res => {
   		this.quotecartService.cartData = res.cart_data
-  		this.calcuateTotalAndSet()
+  		if(res.cart_data){
+  			this.calcuateTotalAndSet()
+  		}
   	})
   }
 
@@ -34,7 +36,7 @@ export class QuotecartComponent implements OnInit {
 
   update(item: any){
   	item.quantity = item.new_quantity
-  	var params = {"purchase_id": this.quotecartService.cartData.purchase_id, "customer_id": this.customerId, "item_param": item}
+  	var params = {"customer_id": this.customerId, "item_param": item}
   	this.quotecartService.addToQuoteCart(params).subscribe(data => {
 			this.quotecartService.cartData = data.cart_data
 			this.calcuateTotalAndSet()
@@ -42,7 +44,7 @@ export class QuotecartComponent implements OnInit {
   }
 
   submitQuoteCart(){
-  	var params = {"purchase_id": this.quotecartService.cartData.purchase_id, "customer_id": this.customerId, "comment": this.comment}
+  	var params = {"customer_id": this.customerId, "comment": this.comment}
   	this.quotecartService.submitQuoteCart(params).subscribe(res => {
   		alert(`You have submitted the quote request successfully. Your quote cart ID is ${res.cart_id}. Please wait for the store's response.`)
   		this.router.navigate([`/collections/${this.customerId}`]);

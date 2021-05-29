@@ -27,7 +27,6 @@ export class ProductListComponent implements OnInit {
   	this.cartService.getCartData(this.customerId).subscribe(data => {
   		this.cartService.cartData = data.cart_data
   	})
-  	
   }
 
   getProducts(): void {

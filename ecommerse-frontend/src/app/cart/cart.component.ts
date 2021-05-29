@@ -21,9 +21,13 @@ export class CartComponent implements OnInit {
   	this.customerId = Number(this.route.snapshot.paramMap.get('cId'));
   	this.cartService.getCartData(this.customerId).subscribe(res => {
   		this.cartService.cartData=res.cart_data
-  		this.calcuateTotalAndSet()
+  		if(res.cart_data){
+  			this.calcuateTotalAndSet()
+  		}
   	})
-  	
+  	this.quotecartService.getQouteCartData(this.customerId).subscribe(res => {
+  		this.quotecartService.cartData = res.cart_data
+  	})
   }
 
   calcuateTotalAndSet(){
@@ -44,19 +48,14 @@ export class CartComponent implements OnInit {
   }
 
   moveToQuote(item: any){
+  	this.quotecartService.cartData ||= {}
 		let items = this.quotecartService.cartData.items || []
-		let qItem = items.find((c:any) => c.catalog_id == item.catalog_id);
+		let qItem = items.find((c:any) => c.order_item_id == item.order_item_id);
 		if(qItem){
 			item.quantity+= qItem.quantity
 		}
-		// var params = {"purchase_id": this.cartService.cartData.purchase_id, "customer_id": this.cId, "item_param": item}
-		// this.cartService.addToCart(params).subscribe(data => {
-		// 	this.cartService.cartData = data.cart_data
-		// })
-		// window.alert(`${item.title} has been added to the cart!`);
-
   	item.quote_price = item.price
-  	var params = {"purchase_id": this.cartService.cartData.purchase_id, "customer_id": this.customerId, "item_param": item}
+  	var params = {"customer_id": this.customerId, "item_param": item}
   	this.quotecartService.addToQuoteCart(params).subscribe(data => {
   		this.quotecartService.cartData = data.cart_data
   	})

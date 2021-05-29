@@ -5,7 +5,7 @@ class Customer < ApplicationRecord
 
 	def get_quotes_details
 		data = []
-		self.quotes.includes([{:quote_items => {:order_item => :catalog}}, :comments, :customer, :store_owner]).each do |quote|
+		self.quotes.each do |quote|
 			next if quote.draft?
 			quote_hash = quote.prepare_qoute_data
 			if quote.pending?

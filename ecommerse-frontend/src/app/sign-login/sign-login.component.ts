@@ -15,10 +15,16 @@ export class SignLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goToHomePage(id:any){
-  	alert(id)
-  	var url = `/collections/${id}`;
-  	this.router.navigate([url]);
+  goToHomePage(){
+  	if(!this.user.id || !this.user.type){
+  		alert("Please enter userId and select user type!!")
+  		return
+  	}
+  	if(this.user.type == "Customer"){
+  		this.router.navigate([`/collections/${this.user.id}`]);
+  	}else{	
+  		this.router.navigate([`/owner/qoute/${this.user.id}`]);
+  	}
   }
 
 }

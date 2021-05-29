@@ -18,6 +18,7 @@ export class ProductDetailsComponent implements OnInit {
 
 	addToCart(item: any) {
 		item.quantity = 1
+		this.cartService.cartData ||={}
 		let items = this.cartService.cartData.items || []
 		let cItem = items.find((c:any) => c.catalog_id == item.catalog_id);
 		if(cItem){
@@ -29,14 +30,6 @@ export class ProductDetailsComponent implements OnInit {
 		})
 		window.alert(`${item.title} has been added to the cart!`);
 	}
-
-
-
-	// getHero(): void {
-	// 	const id = Number(this.route.snapshot.paramMap.get('id'));
-	// 	this.cartService.getProduct(id)
-	// 	.subscribe(product => this.product = product);
-	// }
 
 }
 

@@ -24,7 +24,7 @@ export class CustomerQuoteComponent implements OnInit {
   	})
   }
 
-  viewReplies(quote:any){
+  viewDetails(quote:any){
   	quote.show = !quote.show
   }
 

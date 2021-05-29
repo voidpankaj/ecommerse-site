@@ -15,6 +15,11 @@ Rails.application.routes.draw do
 					get :fetch_quotation_requests
 				end
 			end
+			resources :store_owners, only: [:index] do
+				collection do
+					get :fetch_quotation_requests
+				end
+			end
 			resources :quotation_requests, only: [] do
 				collection do
 					post :add_to_qoute_cart

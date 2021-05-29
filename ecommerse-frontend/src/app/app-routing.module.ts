@@ -8,6 +8,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { SignLoginComponent } from './sign-login/sign-login.component';
 import { CustomerQuoteComponent } from './customer-quote/customer-quote.component';
 import { ShowQuoteRepliesComponent } from './show-quote-replies/show-quote-replies.component';
+import { OwnerQuoteComponent } from './owner-quote/owner-quote.component';
+
 
 
 
@@ -19,7 +21,7 @@ const routes: Routes = [
   { path: 'qoutecart/:cId', component: QuotecartComponent },
   { path: 'login-page', component: SignLoginComponent },
   { path: 'customer/qoute/:cId', component:CustomerQuoteComponent},
-  { path: 'customer/qoute/replies', component:ShowQuoteRepliesComponent},
+  { path: 'owner/qoute/:cId', component:OwnerQuoteComponent},
   { path: '', redirectTo: '/login-page', pathMatch: 'full' }
   // { path: 'home-page/:cId', component: HomePageComponent }
 ];

@@ -16,6 +16,7 @@ import { MyQuoteComponent } from './my-quote/my-quote.component';
 import { CustomerQuoteComponent } from './customer-quote/customer-quote.component';
 import { OwnerQuoteComponent } from './owner-quote/owner-quote.component';
 import { ShowQuoteRepliesComponent } from './show-quote-replies/show-quote-replies.component';
+import { QuoteDetailsComponent } from './quote-details/quote-details.component';
 // import { MatSliderModule } from '@angular/material/slider';
 // import {MatTableModule} from '@angular/material/table';
 
@@ -33,7 +34,8 @@ import { ShowQuoteRepliesComponent } from './show-quote-replies/show-quote-repli
     MyQuoteComponent,
     CustomerQuoteComponent,
     OwnerQuoteComponent,
-    ShowQuoteRepliesComponent
+    ShowQuoteRepliesComponent,
+    QuoteDetailsComponent
   ],
   imports: [
     BrowserModule,

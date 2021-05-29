@@ -1,1 +1,21 @@
-<p>owner-quote works!</p>
+<table class="table" *ngIf="ownerService.ownerData && ownerService.ownerData.quotes">
+  <thead>
+    <tr>
+      <th scope="col">Quote #</th>
+      <th scope="col">Submitted Date</th>
+      <th scope="col">Status</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let quote of ownerService.ownerData.quotes">
+    <tr>
+      <td>{{quote.id}}</td>
+      <td>{{quote.created_at | date:'dd-M-yyyy H:mm'}}</td>
+      <td>{{quote.status}}</td>
+      <td (click)="viewDetails(quote)">Click</td>
+    </tr>
+    <tr *ngIf="quote.show">
+      <app-quote-details [quote]="quote" [send_user_id]="quote.owner_id" [receiver_user_id]="quote.customer_id"></app-quote-details>
+    </tr>
+  </tbody>
+</table>

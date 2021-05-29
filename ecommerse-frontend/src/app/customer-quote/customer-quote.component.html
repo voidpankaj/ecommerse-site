@@ -1,59 +1,21 @@
-<table class="table">
+<table class="table" *ngIf="customerService.customerData && customerService.customerData.quotes">
   <thead>
     <tr>
       <th scope="col">Quote #</th>
       <th scope="col">Submitted Date</th>
       <th scope="col">Status</th>
-      <th scope="col">View Replies</th>
+      <th scope="col">Details</th>
     </tr>
   </thead>
   <tbody *ngFor="let quote of customerService.customerData.quotes">
     <tr>
-      <td>{{quote.cart_id}}</td>
+      <td>{{quote.id}}</td>
       <td>{{quote.created_at | date:'dd-M-yyyy H:mm'}}</td>
       <td>{{quote.status}}</td>
-      <td (click)="viewReplies(quote)">Click</td>
+      <td (click)="viewDetails(quote)">Click</td>
     </tr>
     <tr *ngIf="quote.show">
-      <td colspan="1"></td>
-      <td colspan="4">
-        <table class="table">
-          <th scope="col">Created At</th>
-          <th scope="col">Initiated By</th>
-          <th scope="col">Comment</th>
-          <!-- <th scope="col"> Quote Items</th> -->
-          <tbody *ngFor="let reply of quote.replies">
-            <tr>
-              <td>{{reply.created_at | date:'dd-M-yyyy H:mm'}}</td>
-              <td>{{reply.initiated_by}}</td>
-              <td>{{reply.comment}}</td>
-            </tr>
-            <tr>
-              <td colspan="1"><h3>Items</h3></td>
-              <td colspan="4">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Product Name</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Qoute Price</th>
-                      <th scope="col">Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody *ngFor="let item of reply.items">
-                    <tr>
-                      <td>{{item.title}}</td>
-                      <td>{{item.price}}</td>
-                      <td>{{item.quote_price}}</td>
-                      <td>{{item.quantity}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
+      <app-quote-details [quote]="quote" [send_user_id]="quote.customer_id" [receiver_user_id]="quote.owner_id"></app-quote-details>
     </tr>
   </tbody>
 </table>

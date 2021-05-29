@@ -1,4 +1,9 @@
-<h2>Licence User Login</h2>
+<label for="user_type"> Select User Type </label><br>
+<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" [(ngModel)]="user.type">
+  <option value="Admin">Admin</option>
+  <option value="Customer">Customer</option>
+</select>
+<h2>User Login</h2>
 <div></div>
 <input type="text" [(ngModel)]="user.id" placeholder="customer/owner id">
-<button class="button" (click) = "goToHomePage(user.id)">Login</button>
+<button class="button" (click) = "goToHomePage()">Login</button>
