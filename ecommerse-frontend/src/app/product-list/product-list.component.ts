@@ -7,8 +7,6 @@ import { CustomerService } from '../customer.service';
 
 
 
-
-
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',

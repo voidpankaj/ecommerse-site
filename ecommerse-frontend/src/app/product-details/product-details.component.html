@@ -1,9 +1,21 @@
-<div *ngIf="product">
+<!-- <div *ngIf="product">
 
-  <h5>{{product.title | uppercase}}</h5>
-  <div><span>price: </span>{{product.price | currency}}</div>
-  <div>dwdawdwad{{cId}}</div>
-  <button (click)="addToCart(product)">Add To Cart</button>
-</div>
+  <h5>
+  <div></div>
+  
+</div> -->
 <!--  routerLink="/detail/{{hero.id}}">
   {{hero.name}} -->
+
+
+  <div *ngIf="product">
+    <div class="col-md-4">
+      {{product.title | uppercase}}
+    </div>
+    <div class="col-md-4">
+      <span>price: </span>{{product.price | currency}}
+    </div>
+    <div class="col-md-4">
+     <button (click)="addToCart(product)">Add To Cart</button>
+    </div>
+  </div>

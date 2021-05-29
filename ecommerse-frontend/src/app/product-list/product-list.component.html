@@ -1,13 +1,19 @@
 <h2>Products</h2>
-<a routerLink="/cart/{{customerId}}" class="button fancy-button">
-  <i class="material-icons">shopping_cart</i>
-</a>
+<ul class="nav justify-content-end">
+	<li class="nav-item">
+		<a class="button" routerLink="/cart/{{customerId}}">View Cart</a>
+	</li>
+	<li class="nav-item">
+		<a routerLink="/qoutecart/{{customerId}}">View Quote Cart</a>
+	</li>
+	<li class="nav-item">
+		<a routerLink="/customer/qoute/{{customerId}}">My Qoute Requests</a>
+	</li>
+</ul>
+
+<!-- <h2>{{product.title}}</h2> -->
 <ul class="products">
-  <li *ngFor="let product of products">
-  	<app-product-details [product]="product" [cId]="customerId"></app-product-details>
-   <!--  <a routerLink="/detail/{{product.id}}">
-      <span class="badge">{{product.id}}</span> {{product.name}}
-    </a> -->
-    <!-- <h2>{{product.title}}</h2> -->
-  </li>
+	<li *ngFor="let product of products" class="row">
+		<app-product-details [product]="product" [cId]="customerId"></app-product-details>
+	</li>
 </ul>

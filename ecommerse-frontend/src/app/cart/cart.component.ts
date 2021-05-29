@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { ActivatedRoute } from '@angular/router';
+import { QuotecartService } from '../quotecart.service';
+
 
 
 @Component({
@@ -10,11 +12,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 
-	// items :any[] = [];
 	customerId:any;
 	total:any;
 
-  constructor(public cartService: CartService, private route: ActivatedRoute) { }
+  constructor(public cartService: CartService, private route: ActivatedRoute, private quotecartService: QuotecartService) { }
 
   ngOnInit(): void {
   	this.customerId = Number(this.route.snapshot.paramMap.get('cId'));
@@ -28,14 +29,38 @@ export class CartComponent implements OnInit {
   calcuateTotalAndSet(){
   	this.total = 0;
   	this.cartService.cartData.items.forEach((item: any) => {
+  		item.new_quantity = item.quantity
   		this.total+= item.price*item.quantity
   	})
   }
 
-  // fetchAndSetCart(){
-  // 	this.cartService.getCartData(5).subscribe(res => {
-  // 		this.items = res.cart_data.items;
-  // 	})
-  // }
+  update(item: any){
+  	item.quantity = item.new_quantity
+  	var params = {"purchase_id": this.cartService.cartData.purchase_id, "customer_id": this.customerId, "item_param": item}
+  	this.cartService.addToCart(params).subscribe(data => {
+			this.cartService.cartData = data.cart_data
+			this.calcuateTotalAndSet()
+		})
+  }
+
+  moveToQuote(item: any){
+		let items = this.quotecartService.cartData.items || []
+		let qItem = items.find((c:any) => c.catalog_id == item.catalog_id);
+		if(qItem){
+			item.quantity+= qItem.quantity
+		}
+		// var params = {"purchase_id": this.cartService.cartData.purchase_id, "customer_id": this.cId, "item_param": item}
+		// this.cartService.addToCart(params).subscribe(data => {
+		// 	this.cartService.cartData = data.cart_data
+		// })
+		// window.alert(`${item.title} has been added to the cart!`);
+
+  	item.quote_price = item.price
+  	var params = {"purchase_id": this.cartService.cartData.purchase_id, "customer_id": this.customerId, "item_param": item}
+  	this.quotecartService.addToQuoteCart(params).subscribe(data => {
+  		this.quotecartService.cartData = data.cart_data
+  	})
+  	window.alert(`${item.title} has been added to the Quote Cart!`);
+  }
 
 }

@@ -1,11 +1,14 @@
-<h5>Cart</h5>
+<h2>Shopping Cart</h2>
 
 <div class="cart-item" *ngFor="let item of cartService.cartData.items">
   <span>{{ item.title }}</span>
   <!-- <span>{{item.quantity}}</span> -->
   <span>{{ item.price | currency:'INR' }}</span>
   <span>{{ item.price*item.quantity | currency:'INR'}}</span>
-  <!-- <input [(ngModel)]="item.quantity" name="someid"/> -->
+  <!-- <input [(ngModel)]="item.title" name="title"> <h1>{{item.title}}</h1> -->
+  <input type="number" min="0" max ="100" [(ngModel)]="item.new_quantity" name="quantity" />
+  <button *ngIf="item.quantity!=item.new_quantity" (click)="update(item)">update</button>
+   <button (click)="moveToQuote(item)">Move Quote</button>
 </div>
 <div class="total-price">
 	Total price {{total}}
